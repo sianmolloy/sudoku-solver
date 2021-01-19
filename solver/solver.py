@@ -1,16 +1,45 @@
-#what do I need?
-# -setup tests or atleast on like board of data to run the program with
-# -need to determine what makes a valid solution, and a partial/potential valid solution
-# -then need to solve for valid solution using backtracking
-# algorithm: add next safe number recursively
+
 
 class SudokuSolver:
-    def is_valid(x):
-        #a number is a valid addition if:
-        # 1. it is not present in that row,
-        # 2. it is not present in that column,
-        # 3. it is not present in the 3x3 sub-grid around it
-        return x + 1;
+
+    def print_board(self, board):
+        for i in range(9):
+            for j in range(9):
+                print(board[i][j], end=" ")
+            print()
+
+    def find_empty_spot(self, board):
+        for row in range(9):
+            for col in range(9):
+                if board[row][col] == 0:
+                    return row, col
+        return None
+
+    # determine if a new number is valid (i.e. doesn't violate any rules)
+    # rules:
+    # 1. it isn't already in that row,
+    # 2. it isn't already in that column,
+    # 3. it isn't already in that 3x3 sub-grid
+    def is_valid(self, board, new_num, position):
+        # position[0] is the row of the new num
+        # position[1] is the column of the new num
+        for i in range(9):
+            if board[position[0]][i] == new_num:
+                return False
+        for i in range(9):
+            if board[i][position[0]] == new_num:
+                return False
+        box_row = position[0] // 3 * 3
+        box_col = position[0] // 3 * 3
+        for i in range(box_row, box_row+3):
+            for j in range(box_row, box_row+3):
+                if board[i][j] == new_num:
+                    return False
+        return True
+
+
+    def solve():
+        pass
 
     def main():
         pass
