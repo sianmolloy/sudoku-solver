@@ -58,3 +58,4 @@ class SudokuTest(unittest.TestCase):
 
     def test_solve(self):
         self.sudokuSolver.main(valid_board)
+        self.sudokuSolver.main(invalid_board)
