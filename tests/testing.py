@@ -1,5 +1,5 @@
 import sys
-from solver.solver import SudokuSolver
+import solver.solver as solver
 import unittest
 
 # not solvable r5c1 has no valid values
@@ -38,39 +38,37 @@ almost_solved_valid_board = [
 ]
 
 class SudokuTest(unittest.TestCase):
-    def setUp(self):
-        self.sudokuSolver = SudokuSolver()
 
     def test_print_board(self):
-        self.sudokuSolver.print_board(valid_board)
-        self.sudokuSolver.print_board(invalid_board)
+        solver.print_board(valid_board)
+        solver.print_board(invalid_board)
 
     def test_find_empty_spot(self):
-        self.assertEqual(self.sudokuSolver.find_empty_spot(invalid_board), (0, 0))
-        self.assertEqual(self.sudokuSolver.find_empty_spot(valid_board), (0, 1))
-        self.assertEqual(self.sudokuSolver.find_empty_spot(almost_solved_valid_board), (8, 4))
+        self.assertEqual(solver.find_empty_spot(invalid_board), (0, 0))
+        self.assertEqual(solver.find_empty_spot(valid_board), (0, 1))
+        self.assertEqual(solver.find_empty_spot(almost_solved_valid_board), (8, 4))
 
     def test_is_valid(self):
-        self.assertFalse(self.sudokuSolver.is_valid(invalid_board, 2, (0, 0)))
-        self.assertFalse(self.sudokuSolver.is_valid(invalid_board, 6, (0, 0)))
-        self.assertTrue(self.sudokuSolver.is_valid(invalid_board, 1, (0, 0)))
-        self.assertFalse(self.sudokuSolver.is_valid(valid_board, 8, (1, 2)))
-        self.assertTrue(self.sudokuSolver.is_valid(valid_board, 1, (1, 2)))
-        self.assertTrue(self.sudokuSolver.is_valid(valid_board, 1, (0, 1)))
-        self.assertTrue(self.sudokuSolver.is_valid(almost_solved_valid_board, 8, (8, 4)))
+        self.assertFalse(solver.is_valid(invalid_board, 2, (0, 0)))
+        self.assertFalse(solver.is_valid(invalid_board, 6, (0, 0)))
+        self.assertTrue(solver.is_valid(invalid_board, 1, (0, 0)))
+        self.assertFalse(solver.is_valid(valid_board, 8, (1, 2)))
+        self.assertTrue(solver.is_valid(valid_board, 1, (1, 2)))
+        self.assertTrue(solver.is_valid(valid_board, 1, (0, 1)))
+        self.assertTrue(solver.is_valid(almost_solved_valid_board, 8, (8, 4)))
 
     def test_is_valid_input_validation(self):
         with self.assertRaises(ValueError):
-            self.sudokuSolver.is_valid(valid_board, 0, (1, 2))
+            solver.is_valid(valid_board, 0, (1, 2))
         with self.assertRaises(ValueError):
-            self.sudokuSolver.is_valid(valid_board, 10, (1, 2))
+            solver.is_valid(valid_board, 10, (1, 2))
 
     def test_solve(self):
-        self.assertTrue(self.sudokuSolver.solve(almost_solved_valid_board))
-        self.assertTrue(self.sudokuSolver.solve(valid_board))
-        self.assertFalse(self.sudokuSolver.solve(invalid_board))
+        self.assertTrue(solver.solve(almost_solved_valid_board))
+        self.assertTrue(solver.solve(valid_board))
+        self.assertFalse(solver.solve(invalid_board))
 
     def test_main(self):
-        self.sudokuSolver.main(almost_solved_valid_board)
-        self.sudokuSolver.main(valid_board)
-        self.sudokuSolver.main(invalid_board)
+        solver.find_and_print_solution(almost_solved_valid_board)
+        solver.find_and_print_solution(valid_board)
+        solver.find_and_print_solution(invalid_board)
