@@ -2,7 +2,7 @@ from typing import List, Optional, Tuple
 
 
 class SudokuSolver:
-    '''Solve sudoke puzzles'''
+    '''Solve sudoku puzzles'''
 
     def print_board(self, board: List[List[int]]) -> None:
         '''Print a sudoku board'''
@@ -22,7 +22,8 @@ class SudokuSolver:
     def is_valid(self, board: List[List[int]], new_num: int, position: Tuple[int, int]) -> bool:
         '''Check if given number and position are valid for the board'''
         # position[0] is the row, position[1] is the column
-        assert new_num in range(1, 10), f"illegal number: {new_num}"
+        if new_num not in range(1, 10):
+            raise ValueError(f"illegal number: {new_num}")
         # check that there are no duplicates in the row
         for i in range(9):
             if board[position[0]][i] == new_num:
@@ -41,7 +42,7 @@ class SudokuSolver:
         return True
 
     def solve(self, board: List[List[int]]) -> bool:
-        '''Solve sudoku board if solvable'''
+        '''Solve sudoku board in-place if solvable'''
         empty_spot = self.find_empty_spot(board)
         while empty_spot is not None:
             for num in range(1, 10):
@@ -65,4 +66,4 @@ class SudokuSolver:
         if self.solve(board):
             self.print_board(board)
         else:
-            print('invalid board')
+            print('no solution exists')
